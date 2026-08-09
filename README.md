@@ -10,7 +10,7 @@ University Website
 | Syed Hani Hussain Kazmi | hanihussain94@hotmail.com| [Hani Kazmi](https://github.com/HaniKazmi94)
 | Muhammad talha Siddiqui| engr.talhasiddiqui94@gmail.com | 
 | Soundarya pallanti| bujjilaxmi2712@gmail.com | [Soundarya Pallanti](https://github.com/soundarya4807289)
-| Vivek Vijaykumar Ingle| vivekvijay380@gmail.com | [Vivek Vijay](https://github.com/S4851211)  
+| Vivek Vijaykumar Ingle| vivekvijay380@gmail.com | [Vivek Vijaykumar Ingle](https://github.com/vivek-v-ingle)  
  
  ## Motivation and Genral Objective
  Human Activity Recognition(HAR), and in particular the recognition of the Activities of Daily Living
