@@ -1,5 +1,6 @@
 import pandas as pd
 import os.path
+from pathlib import Path
 import os
 import json
 from sklearn.metrics import accuracy_score
@@ -13,13 +14,13 @@ class Model_Prediction():
 
     IMU_list = ["lla", "lua", "rla", "rua", "rt", "back"]
 
-    data_path_prefix = r"/home/zaid/project/simulationdata"
+    data_path_prefix = str(Path(__file__).resolve().parent / "simulationdata")
 
-    model_path_prefix = r"/home/zaid/project/model"
+    model_path_prefix = str(Path(__file__).resolve().parent / "model")
 
-    prediction_path_prefix = r"/home/zaid/project/IMU_Predication"
+    prediction_path_prefix = str(Path(__file__).resolve().parent / "IMU_Predication")
 
-    output_path = r"/home/zaid/project/output"
+    output_path = str(Path(__file__).resolve().parent / "output")
 
     IMU = ""
     simulated_action_sequnce = ""
@@ -36,7 +37,7 @@ class Model_Prediction():
 
     def load_simulation_seq(self):
 
-        with open('ADL_Simulation_Sequence.json', 'r') as f:
+        with open(Path(__file__).resolve().parent / 'ADL_Simulation_Sequence.json', 'r') as f:
             self.simulated_action_sequnce = json.load(f)
 
     def true_labels(self):

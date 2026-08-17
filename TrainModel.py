@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+from pathlib import Path
 from sklearn.svm import SVC
 import pickle
 from sklearn.preprocessing import StandardScaler
@@ -9,8 +10,8 @@ from sklearn.preprocessing import StandardScaler
 class Train_Model():
 
     #path to prepared data
-    data_path_prefix = r"/home/zaid/project/output"
-    model_path_prefix = r"/home/zaid/project/model"
+    data_path_prefix = str(Path(__file__).resolve().parent / "output")
+    model_path_prefix = str(Path(__file__).resolve().parent / "model")
     IMU_list = ["lla", "lua", "rla", "rua", "rt", "back"]
     #name of IMU
     IMU = ""
