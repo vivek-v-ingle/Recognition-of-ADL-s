@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -8,12 +9,12 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 class Model_Train():
 
     #path for raw data
-    data_prefix = r"/home/zaid/project/data"
+    data_prefix = str(Path(__file__).resolve().parent / "data")
 
 
 
     #path to store output with output folder on disk
-    output_path_prefix = r"/home/zaid/project/output"
+    output_path_prefix = str(Path(__file__).resolve().parent / "output")
 
     # name of data folders for volunteers
     volunteers_data_paths = ["volunteer_01", "volunteer_02", "volunteer_03", "volunteer_04", "volunteer_05",
@@ -70,14 +71,14 @@ class Model_Train():
                         temp_df["ADL"] = [ADL] * temp_df.shape[0]
                         temp_df["module"] = [data_file] * temp_df.shape[0]
 
-                        data_df = data_df.append(temp_df)
+                        data_df = pd.concat([data_df, temp_df], ignore_index=True)
                         row_no = row_no + 2
 
                     else:
 
                         row_no = row_no + 1
 
-                volunteer_data_df = volunteer_data_df.append(data_df)
+                volunteer_data_df = pd.concat([volunteer_data_df, data_df], ignore_index=True)
 
         return volunteer_data_df
 
@@ -90,7 +91,23 @@ class Model_Train():
 if __name__ == "__main__":
 
     final_data_df = pd.DataFrame(
-        columns=["dataType", "Time", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "ADL", "module"])
+        columns=[
+            "dataType",
+            "Time",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "ADL",
+            "module",
+        ]
+    )
 
     obj = Model_Train()
 
@@ -100,16 +117,30 @@ if __name__ == "__main__":
         data_path = os.path.join(obj.data_prefix, volunteer_data_path)
         annotation_df = obj.read_annotation_data(data_path)
 
-        final_df = final_data_df.append(obj.prepare_data(annotation_df, data_path))
+        final_df = pd.concat(
+            [
+                final_data_df,
+                obj.prepare_data(annotation_df, data_path),
+            ],
+            ignore_index=True,
+        )
 
-    final_df.drop( labels = ["dataType", "Time"], axis = 1, inplace=True)
+    final_df.drop(
+        labels=["dataType", "Time"],
+        axis=1,
+        inplace=True,
+    )
 
     train, test = obj.split_test_train(final_df)
 
-    train.to_csv(os.path.join(obj.output_path_prefix, "train_data.csv"), index=False)
+    train.to_csv(
+        os.path.join(obj.output_path_prefix, "train_data.csv"),
+        index=False,
+    )
+
     test = test.reset_index()
-    test.to_csv(os.path.join(obj.output_path_prefix, "test_data.csv"),  index=False)
 
-
-
-
+    test.to_csv(
+        os.path.join(obj.output_path_prefix, "test_data.csv"),
+        index=False,
+    )

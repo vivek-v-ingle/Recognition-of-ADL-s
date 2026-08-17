@@ -1,7 +1,21 @@
-file_list=( "/home/zaid/project/Recognition-of-ADL-s/PrepareData.py" "/home/zaid/project/Recognition-of-ADL-s/TrainModel.py" "//home/zaid/project/Recognition-of-ADL-s/PrepareSimulationData.py" "/home/zaid/project/Recognition-of-ADL-s/Model_Prediction.py" )
+#!/usr/bin/env bash
 
+set -e
 
-for py_file in "${file_list[@]}"
-do
-    python ${py_file}
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+python_files=(
+    "$PROJECT_ROOT/PrepareData.py"
+    "$PROJECT_ROOT/TrainModel.py"
+    "$PROJECT_ROOT/PrepareSimulationData.py"
+    "$PROJECT_ROOT/Model_Prediction.py"
+)
+
+for py_file in "${python_files[@]}"; do
+    echo
+    echo "=================================================="
+    echo "Running: $py_file"
+    echo "=================================================="
+
+    uv run python "$py_file"
 done
